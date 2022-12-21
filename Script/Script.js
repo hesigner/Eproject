@@ -75,3 +75,53 @@ function showmodal(){
         document.getElementById("profilemodal").style.display="none"; 
     }
 }
+function opencartbox(){
+    if(document.getElementById("cartBox").style.marginRight == "-650px"){
+        document.getElementById("cartBox").style.marginRight="0px";
+        document.getElementById("cartBox").style.transition="1s";
+        document.getElementById("cartboxbackblur").style.opacity="1";
+        document.getElementById("cartboxbackblur").style.width="100%";
+    }
+    else{
+        document.getElementById("cartBox").style.marginRight="-650px";
+        document.getElementById("cartboxbackblur").style.opacity="0";
+        document.getElementById("cartboxbackblur").style.width="0";
+    }
+ }
+ function  closecartbox(){
+        document.getElementById("cartBox").style.marginRight="-650px";
+        document.getElementById("cartboxbackblur").style.opacity="0";
+        document.getElementById("cartboxbackblur").style.width="0";
+ }
+ function increaseValue() {
+    var value = parseInt(document.getElementById('number').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value++;
+    document.getElementById('number').value = value;
+  }
+  
+  function decreaseValue() {
+    var value = parseInt(document.getElementById('number').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value < 1 ? value = 1 : '';
+    value--;
+    document.getElementById('number').value = value;
+  }
+
+  
+function openAddModal(){
+    var modal = document.getElementById("AddcategoryModal");
+    var background = document.getElementById("bgblur");
+     
+    modal.style.display="";
+    background.style.display="";
+}
+function CloseAddModal(){
+   var modal = document.getElementById("AddcategoryModal");
+   var background = document.getElementById("bgblur");
+    
+   modal.style.display="none";
+   background.style.display="none";
+
+   loginform();
+}

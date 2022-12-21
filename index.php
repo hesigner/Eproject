@@ -1,7 +1,6 @@
 <?php 
 include 'Layout/header.php';
 include 'Operations/Connection.php';
-
 ?>
 
 <div class="banners col-12">
@@ -9,7 +8,15 @@ include 'Operations/Connection.php';
         <img src="Material/Banners/Banner 1/Celibration Image.png" class="bannerimage col-lg-6 col-sm-12" alt="">
         <div class="col-lg-5 col-sm-12">
             <img src="Material/Banners/Banner 1/Winner Text.png" class="winnertext" alt="">
-            <h1 class="bannerName">Hassan Mujtaba</h1>
+            <?php
+                            $querys = 'select * from winners INNER JOIN customer on customer.custid = winners.custid
+                            ';
+                            $res = mysqli_query($con, $querys);
+            while ($data = mysqli_fetch_assoc($res)) {
+            ?>
+            <h1 class="bannerName"><?= $data['Name'] ?></h1>
+            <?php
+            }?>
             <img src="Material/Banners/Banner 1/position.png" class="postitiontext" alt="">
         </div>
     </div>
@@ -329,7 +336,7 @@ include 'Operations/Connection.php';
             </div>
             <div class="col-12">
                 <div class="row page pb-4">
-                <?php
+                    <?php
                     $querys = 'select * from books';
                     $res = mysqli_query($con, $querys);
                 while ($data = mysqli_fetch_assoc($res)) {
@@ -369,7 +376,13 @@ include 'Operations/Connection.php';
                                     </svg>
                                 </div>
                                 <div class="boxbuttons">
-                                    <input type="button" name="" value="Add to Cart" id="">
+                                <form action="Operations/Cart_Crud.php" method="post">
+                                  <input type="hidden" name="Bookid" value="<?= $data['Bookid'] ?>"></a>
+                                  <input type="hidden" name="BookName" value="<?= $data['Book_Name'] ?>"></a>
+                                  <input type="hidden" name="qty" value="1"></a>
+                                  <input type="hidden" name="Price" value="<?= $data['Price'] ?>"></a>
+                                  <input type="submit" name="addtocart" value="Add to Cart"></a>
+                                </form>
                                 </div>
                             </div>
                         </div>
@@ -460,4 +473,8 @@ include 'Operations/Connection.php';
 
 <?php
 include 'Layout/footer.php';
+?>
+
+<?php
+include 'Layout/cart.php';
 ?>

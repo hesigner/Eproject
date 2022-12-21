@@ -89,11 +89,43 @@ include 'Operations/Connection.php';
                             </svg>
                         </div>
                 <h3><span><?= $data['Price'] ?></span> PKR</h3>
-                <input type="button" value="Add to Cart">
+                <form action="Operations/Cart_Crud.php" method="post">
+                  <input type="hidden" name="Bookid" value="<?= $data['Bookid'] ?>"></a>
+                  <input type="hidden" name="BookName" value="<?= $data['Book_Name'] ?>"></a>
+                  <input type="hidden" name="qty" value="1"></a>
+                  <input type="hidden" name="Price" value="<?= $data['Price'] ?>"></a>
+                  <input type="submit" name="addtocart" value="Add to Cart"></a>
+                </form>
             </div>
             </div>
             <?php
-            
           }?>
     </div>
   </div>
+</div>
+
+<?php
+include 'Layout/cart.php';
+?>
+
+<div class="alert alert-success" role="alert" id="mesgreceived" style="position:fixed; bottom:0px; margin-left: 20px; display: none;">
+  Book has been added to cart !
+</div>
+<?php
+@
+  $ID = $_GET['sended'];
+  if ($ID) {
+    echo "<script>
+  document.getElementById('mesgreceived').style.display = 'block';
+
+  const myTimeout = setTimeout(myGreeting, 5000);
+
+  function myGreeting() {
+    document.getElementById('mesgreceived').style.display = 'none';
+    window.location.href='Books.php';
+
+  }
+    </script>";
+    }
+
+?>

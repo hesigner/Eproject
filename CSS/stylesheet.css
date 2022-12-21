@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display');
 :root {
     --main: #667de2; 
     --maindull: #5067cf; 
@@ -582,6 +582,21 @@ display: none;
 .boxbuttons>input:hover{
     background-color: #2c2c2c;
 }
+.boxbuttons>form>input{
+    width: 80%;
+    background-color: var(--main);
+    font-size:16px;
+    font-weight: 500;
+    text-align: center;
+    color: white;
+    border-radius: 0px;
+    border: 0px;
+    border-radius:3px;
+    margin-top: 10px;
+}
+.boxbuttons>form>input:hover{
+    background-color: #2c2c2c;
+}
 .carousel-indicators>li{
     background-color: #4d66d3 !important;
     border: 1px solid rgba(0, 0, 0, 0) !important;
@@ -796,8 +811,8 @@ display: none;
     width: 100px;
     margin: auto;
 }
-.productsArea>div>div>input{
-    background-color: #FF5757;
+.productsArea>div>div>form>input{
+    background-color: #4d66d3;
     color: white;
     border: 0px;
     width: 85%;
@@ -1069,4 +1084,337 @@ display: none;
     width: 40px;
     height: 1px;
     background-color: #bbbbbb;
+}
+/* Cart */
+/* CartBox */
+.cartbox-blur{
+    background-color: #151414bd;
+    backdrop-filter: blur(1px); 
+    position: fixed;
+    height: 100%;
+    z-index: 9999;
+    top: 0;
+    width: 100%;
+}
+.CartBox{
+    background-color: rgb(255, 255, 255);
+    z-index: 999999;
+    top: 0;
+    right: 0;
+    position: fixed;
+    width: 600px;
+    height: 100%;
+}
+.Cartbox-Header{
+    height: 80px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.034);
+}
+.Cartbox-Header>h1{
+    line-height: 80px;
+    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    float: left;
+    padding-left: 50px;
+    text-align: center;
+}
+.closecartbox{
+    float: right;
+    line-height: 80px;
+    width: 40px;
+    margin-right: 50px;
+    color: #151414;
+    stroke: #151414a9;
+}
+.closecartbox>svg{
+    height: 22px;
+    width: 22px;
+    margin-right: 50px;
+    color: #151414;
+    stroke: #151414a9;
+    border-radius: 20px;
+}
+.cartbox-body{
+    width: 100%;
+    height: 80%;
+    overflow-y: scroll;
+}
+.cartproduct{
+    border: 2px solid rgba(0, 0, 0, 0.151);
+    width: 90%;
+    height: 100px;
+    margin: auto;
+    display: flex;
+    margin-top: 15px;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.075);
+    border-radius: 20px;
+}
+.cartproductimage{
+    width: 120px;
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+}
+.cartproductimage>img{
+    width: auto;
+    height: 100%;
+    margin-left: 10px;
+    border-radius: 1px;
+    box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.267);
+}
+.cartproductDetails{
+    margin-top: 21px;
+}
+.cartproductDetails>h1{
+    font-size: 22px;
+    font-variant: small-caps;
+}
+.cartproductDetails>h2{
+    margin-top: -5px;
+    font-size: 15px;
+    background-color: #2b2b2b;
+    color: white;
+    width: fit-content;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-radius: 3px;
+}
+
+
+.cartboxtotal{
+    padding-top: 20px;
+    border-top: 2px solid rgba(0, 0, 0, 0.075);
+}
+.carttotal{
+    width: 100%;
+} 
+.carttotal>h1{
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0.055);
+    padding-top: 6px;
+    padding-bottom: 6px;
+    color: rgb(0, 0, 0);
+    padding-left: 60px;
+    padding-right: 60px;
+
+}
+.carttotal>h1>span{
+    font-size: 20px;
+    float: right;
+    width: 140px;
+    text-align: right;
+}  
+.cartcheckout{
+    margin: auto;
+    justify-content: center;
+    display: flex;
+    margin-top: 15px;
+}
+.cart-buttons>button{
+    width: 100%;
+    margin-right: 5px;
+    margin-left: 5px;
+    height: 40px;
+    border: none;
+    border-radius: 20px;
+}
+.cartcheckout{
+    background-color: rgb(58, 58, 58);
+    width: 70%;
+    border: 0px;
+    height: 40px;
+    color: white;
+    line-height: 40px;
+}
+.cartcheckout:hover{
+    background-color: rgb(32, 32, 32);
+    color: white;
+    text-decoration: none;
+}
+.productQuantity{
+    padding-top: 32px;
+}
+.productQuantity>input{
+    width: 50px;
+    border: 0px;
+    background-color: #eeeeee;
+    border-radius: 4px;
+
+}
+.productQuantity>input::-webkit-outer-spin-button,
+.productQuantity>input::-webkit-inner-spin-button {
+    opacity: 1;
+    border: 0px;
+}
+
+.box2>div>h1{
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 100%;
+    background-color: rgb(230, 230, 230);
+    height: 40px;
+    line-height: 40px;
+    padding-left: 35px;
+    border-radius: 5px;
+}
+.box3{
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 100%;
+    background-color: rgb(230, 230, 230);
+    padding-left: 20px;
+    border-radius: 5px;
+}
+.box3>h1{
+    font-size: 30px;
+    font-family: 'Red Hat Display', sans-serif;
+}
+.compitem{
+    font-size:18px;
+    font-family: 'Arial';
+    padding-left: 6px;
+}
+.compitem>span{
+    color: #1c36aa;
+}
+.box3{
+    padding-top: 20px;
+}
+.box3>div>ul{
+    display: inline;
+    margin-left: -39px;
+}
+.box3>div>ol>li{
+margin-top: 10px;
+font-size: 15px;
+}
+.box3>div>ul>li{
+    display: inline;
+    background-color: #3f3f3f;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 4px;
+    color: white;
+    border-radius: 3px;
+    margin-left: 5px;
+}
+.box3>div>ul>li>h2{
+    text-align: left;
+    display: inline;
+}
+.box3>div>ul>li>h2{
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.compstart{
+    font-size: 18px !important;
+    margin-left: 22px;
+    border: 2px solid rgba(20, 20, 20, 0.534) !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 50px;
+    float: left;
+}
+.compstart2{
+    font-size: 18px !important;
+    margin-left: 22px;
+    background-color: #3f3f3f;
+    padding-left: 20px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 50px;
+    float: left;
+}
+.compstart2:hover{
+    background-color: #292929;
+    cursor: pointer;
+}
+
+
+.AddcategoryModal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.986);
+    width: auto;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    z-index: 99999;
+    border-radius: 15px;
+}
+.AddcategoryModal>svg{
+    width: 30px;
+    color: #f5f5f5dc;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    background-color: rgba(235, 80, 80, 0.685);
+    border-radius:10px;
+}
+.AddcategoryModal>svg:hover{
+    background-color: rgba(235, 80, 80, 0.979);
+}
+.AddcategoryModal>form>h1{
+    font-size: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #292929dc;
+    font-family: 'Comfortaa', cursive;
+}
+.AddcategoryModal>form>p{
+    margin-top: 5px;
+    font-size: 14px;
+    text-align: center;
+    color: #292929dc;
+    font-weight: 500;
+}
+.AddcategoryModal>form>p>span{
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 14px;
+    text-align: center;
+    color: #175ef8dc;
+    font-weight: 600;
+}
+.blurbg{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: #000000de;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}
+.logininput{
+    width: 350px !important;
+    background-color: #e6e4e4 !important;
+}
+
+.form-control{
+    background-color: rgba(233, 233, 233, 0.534);
+    padding-left: 30px;
+    border: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

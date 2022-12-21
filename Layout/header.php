@@ -1,7 +1,6 @@
 <? include 'Connection.php'; ?>
 <?php session_start(); ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +22,7 @@
                 <path
                     d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
             </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" onclick="opencartbox()" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
                 <path
                     d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
             </svg>
@@ -59,7 +58,7 @@
         <ul>
             <li><a href="index.php">Home</a></li>
             <li><a href="Books.php">Shop</a></li>
-            <li><a href="#">Compititons</a></li>
+            <li><a href="Compitition.php">Compititons</a></li>
             <li><a href="About.php">About</a></li>
             <li><a href="Contact.php">Contact</a></li>
         </ul>
@@ -82,10 +81,9 @@
         <ul>
             <li><a href="index.php">Home</a></li>
             <li><a href="Books.php">Books</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Quiz</a></li>
-            <li><a href="#">My Books</a></li>
+            <li><a href="About.php">About</a></li>
+            <li><a href="Contact.php">Contact</a></li>
+            <li><a href="Compitition.php">Compititon</a></li>
         </ul>
     </div>
     <div class="blurbg" id="bgblur" style="display: none;"></div>
@@ -142,5 +140,5 @@
                         style="background-color: #4d66d3; color:white;">Register</button>
                     <p>Already a user <span onclick="loginform()">Login Now</span></p>
                 </form>
-            </div>
+            </div>    
 </body>
