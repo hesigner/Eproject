@@ -16,6 +16,7 @@
     </div>
     <div class="cartbox-body">
     <?php
+    @
         $CurrentCustomer = $_SESSION['DatabaseName']; 
         $query = "select * from cart
         INNER JOIN books on books.Bookid = cart.Bookid
@@ -24,7 +25,7 @@
              while ($data = mysqli_fetch_assoc($res)) { ?>
         <div class="cartproduct">
             <div class="cartproductimage col-2">
-                <img src="Material/Books/Book2.png" alt="">
+                <img src="Admin Panel/Admin Panel/<?= $data['Image']?>" alt="">
             </div>
             <div class="col-6 cartproductDetails " style="line-height: 35px;">
                 <h1><?= $data['Book_Name'] ?></h1>
@@ -49,6 +50,15 @@
         <?php
         }?>
     </div>
-    <a class="cartcheckout"  href="Order.php">ORDER NOW</a>
+    <?php
+       @ $CurrentCustomer = $_SESSION['DatabaseName']; 
+        if($CurrentCustomer){
+        echo '<a class="cartcheckout"  href="Order.php">ORDER NOW</a>';
+        }
+        else{
+            echo '<a class="cartcheckout" href="#">ORDER NOW</a>';
+        }
+    ?>
+
 
 </div>

@@ -7,6 +7,7 @@ include 'Operations/Connection.php';
     <div class="row m-0 p-0">
         <img src="Material/Banners/Banner 1/Celibration Image.png" class="bannerimage col-lg-6 col-sm-12" alt="">
         <div class="col-lg-5 col-sm-12">
+            
             <img src="Material/Banners/Banner 1/Winner Text.png" class="winnertext" alt="">
             <?php
                             $querys = 'select * from winners INNER JOIN customer on customer.custid = winners.custid
@@ -344,7 +345,7 @@ include 'Operations/Connection.php';
                     <div class="col-lg-4 col-sm-12 m-0 p-2">
                         <div class="box row m-0">
                             <div class="col-4">
-                                <img src="Material/Books/Book1.jpg">
+                                <img src="Admin Panel/Admin Panel/<?= $data['Image']?>">
                             </div>
                             <div class="col-8 p-0 m-0 TrendingBookDetails">
                                 <h1><?= $data['Book_Name'] ?></h1>

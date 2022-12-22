@@ -10,39 +10,48 @@ include 'Layout/header.php';
 include 'Operations/Connection.php';
 
 ?>
+<?php
+$ID = $_GET['Updid'];
+$query = "select * from books
+INNER JOIN category on category.Catid = books.cat_id
+where Bookid = $ID";
+$GetData = mysqli_query($con, $query);
+$catdata = mysqli_fetch_assoc($GetData); 
+?>
 <div class="pageMaterial" id="pageMaterial">
 <form action="Operations/Books_Crud.php" method = "post" enctype="multipart/form-data">
 
     <div class="Box row m-0">
 
          <div class="col-6 photoupload">
-         <img src="https://winaero.com/blog/wp-content/uploads/2019/09/Photos-app-icon-256-colorful.png" id="VisibleImage" alt="">
+         <img src="<?= $catdata['Image'] ?>" id="VisibleImage" alt="">
          <input type="file" class="choosefile" id="Image" name="Image">
        </div>
         <div class="classform col-lg-6 col-md-12">
             <div class="form-group">
                 <label for="">NAME</label>
-                <input type="txt" class="form-control" name="Name">
+                <input type="txt" class="form-control"  value="<?= $catdata['Book_Name'] ?>" name="Name">
             </div>
             <div class="form-group">
                 <label for="">AUTHOR NAME</label>
-                <input type="txt" class="form-control" name="AuthorName">
+                <input type="txt" class="form-control" value="<?= $catdata['Author_Name'] ?>" name="AuthorName">
             </div>
             <div class="form-group">
                 <label for="">EDITION</label>
-                <input type="txt" class="form-control" name="Edition">
+                <input type="txt" class="form-control" value="<?= $catdata['Edition'] ?>" name="Edition">
             </div>
             <div class="form-group">
                 <label for="">Price</label>
-                <input type="txt" class="form-control" name="Price">
+                <input type="txt" class="form-control" value="<?= $catdata['Price'] ?>" name="Price">
             </div>
             <div class="form-group">
                 <label for="">Delivery Details</label>
-                <input type="txt" class="form-control" name="deliverydetails">
+                <input type="txt" class="form-control" value="<?= $catdata['Delivery_Details'] ?>" name="deliverydetails">
             </div>
             <div class="form-group">
                 <label for="">Category</label>
                 <select class="form-control" name="category" required>
+                    <option value="<?= $catdata['cat_id'] ?>"><?= $catdata['category_name'] ?></option>
                     <?php
                     $fetchquery = "select * from category";
                     $query = mysqli_query($con, $fetchquery);
@@ -55,25 +64,12 @@ include 'Operations/Connection.php';
                 ?>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="">Book Type</label>
-                <select class="form-control" name="booktype" required>
-                    <?php                                     
-                  $Booktype = "select * from booktype";
-                  $runquery = mysqli_query($con, $Booktype);
-
-                  $output = "<option> Select BookType </option>";
-                  while($row = mysqli_fetch_assoc($runquery)){
-                      $output .='<option value=" '. $row['Typeid'] .'">'.$row['Type']. '</option>';
-                  }
-                  echo $output;
-                  ?>
-                </select>
-            </div>
 
             <div class="form-group">
                 <label for="">Book Weight</label>
                 <select class="form-control" name="bookweight" required>
+                <option value="<?= $catdata['weight_in_Kg'] ?>"><?= $catdata['weight_in_Kg'] ?></option>
+
                     <?php 
                   $DeliveryWeight = "select * from book_weight";
                   $runquery = mysqli_query($con, $DeliveryWeight);
@@ -89,7 +85,7 @@ include 'Operations/Connection.php';
             </div>
             <div class="row m-0 p-0">
                 <div class="col-12 m-0 p-0">
-                    <button type="submit" name="AddBook" class="btn submitbutton btn-primary m-1">ADD BOOK</button>
+                    <button type="submit" name="updatebook" class="btn submitbutton btn-primary m-1">Update BOOK</button>
                 </div>
             </div>
         </div>

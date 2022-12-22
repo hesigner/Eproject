@@ -62,7 +62,7 @@ include 'Operations/Connection.php';
     echo '<div class="col-lg-3 col-sm-12 m-0 p-2">' ?>
             <div class="box">
                 <div class="BookImage">
-                    <img src="Material/Books/Book1.jpg" alt="">
+                <img src="Admin Panel/Admin Panel/<?= $data['Image']?>">
                 </div>
                 <h1><?= $data['Book_Name'] ?></h1>
                 <div class="bookrating">

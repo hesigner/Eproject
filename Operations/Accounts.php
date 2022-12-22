@@ -13,20 +13,23 @@
 
     if ($EmailFound) {
         $res = mysqli_fetch_assoc($query);
-        $DatabasePassword = $res['Password'];
-        $DatabaseEmail = $res['Email'];
-        $Role = $res['Role'];
+        $_SESSION['DatabaseName'] = $res['Name']; // echo $_SESSION['db_Name'];
+        $_SESSION['Cust_id'] = $res['custid'];
+        $_SESSION['CustEmail'] = $res['Email'];
+        $_SESSION['CustContact'] =$res['Contact'];
+        $_SESSION['DatabaseRole'] = $res['Role'];
+        $_SESSION['DatabasePassword'] = $res['Password'];
 
-        if($DatabasePassword == $Password){
+        if($_SESSION['DatabasePassword'] == $Password){
             $_SESSION['DatabaseName'] = $res['Name'];
             $_SESSION['DatabaseRole'] = $res['Role'];
-            if($Role == "Admin"){
+            if( $_SESSION['DatabaseRole'] == "Admin"){
                 echo "<script>alert('Login Successfully');window.location.href = '../Admin Panel/index.php'</script>";
             }
-            if($Role == "Customer"){
+            if( $_SESSION['DatabaseRole'] == "Customer"){
                 echo "<script>alert('Login Successfully');window.location.href = '../index.php'</script>";
             }
-            if($Role == "Member"){
+            if( $_SESSION['DatabaseRole'] == "Member"){
                 echo "<script>alert('Login Successfully');window.location.href = '../index.php'</script>";
             }
         }

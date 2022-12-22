@@ -9,6 +9,13 @@ $queryrun = mysqli_query($con, $query);
 
 $bookquery = "select * from books";
 $runbookquery = mysqli_query($con, $bookquery);
+$Names = $_SESSION['DatabaseName']; 
+$cartquery = "select * from cart
+INNER JOIN books on books.Bookid = cart.Bookid
+where Customer = '$Names'";
+
+$runcartquery = mysqli_query($con, $cartquery);
+
 
 $creditquery = "select * from credit_card";
 $runcreditquery = mysqli_query($con, $creditquery);
@@ -45,6 +52,7 @@ $rundelcharges = mysqli_query($con, $delcharges);
                             <th scope="col">Book Name</th>
                             <th scope="col">Price</th>
                             <th scope="col">Qty</th>
+                            <th scope="col">Order Book</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -59,10 +67,11 @@ $rundelcharges = mysqli_query($con, $delcharges);
                                  echo '<tr>';
                                  ?>
                         <td><?= $data['Bookid'] ?></td>
-                        <td></td>
+                        <td> <img src="Admin Panel/Admin Panel/<?= $data['Image']?>" style="width: 50px;"></td>
                         <td><?= $data['Book_Name'] ?></td>
                         <td><?= $data['Price'] ?></td>
                         <td><?= $data['Qty'] ?></td>
+                        <td><a href="ConfirmOrder.php?bookid=<?= $data['Bookid'] ?>">Confirm Order</a></td>
                         <td><a href="Operations/Cart_Crud.php?Delid=<?= $data['Cartid'] ?>">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-trash3-fill" viewBox="0 0 16 16">
@@ -78,54 +87,342 @@ $rundelcharges = mysqli_query($con, $delcharges);
             </div>
         </div>
     </div>
-    <div class="col-4 p-2" style=" margin-top: 10px;">
+
+    <div class="col-12 p-2" style=" margin-top: 120px;">
         <div class="box">
-            <h1 style="text-align:center; font-size: 25px;">BOOK DETAILS</h1>
-            <div class="row p-4">
-                <?php
-                    $CurrentCustomer = $_SESSION['DatabaseName']; 
-                    $query = "select * from cart
-                    INNER JOIN books on books.Bookid = cart.Bookid
-                    where Customer = '$CurrentCustomer'";
-                    $res = mysqli_query($con, $query);
-                while ($data = mysqli_fetch_assoc($res)) {
-                ?>
-                <div class="col-12" style="background-color: rgba(233, 233, 233, 0.534); width: 100%; height:auto; border-radius: 5px; margin-bottom: 25px;">
-                    <div class="row m-0 p-2">
-                        <h1 class="" style="text-align: left; font-size: 12px; background-color: grey; width: 170px; padding-left: 20px; border-radius: 5px; height: 25px;color:white; line-height: 25px; position: absolute; margin-top: -20px;">For Book - <span><?= $data['Book_Name'] ?></span></h1>
-                        <input type="hidden" value="<?= $data['Bookid'] ?>" name="bookid">
-                        <select id="Booktype" name="booktype" class="form-control logininput col-12 mt-3" style="height: 35px;">
-                            <option value="Select Book Type"></option>
-                            <?php
-                                $query = "select * from booktype";
-                                $queryrun = mysqli_query($con, $query);
-                                while($row = mysqli_fetch_assoc($queryrun)):?>
-                            <option value="<?= $row['Typeid']?>"><?= $row['Type']?></option>
-                            <?php endwhile; ?>
+            <h1 style="text-align:center; font-size: 25px;">ORDER SUMMARY</h1>
+            <div class="blurbg" id="bgblur" style="display: none;"></div>
+
+    <form action="Admin Panel/Operations/Orders_Crud.php" method = "post">
+        <div class="form-group row p-4">
+
+                <input type="hidden"  name = "CustName" id="" value="<?php echo @$_SESSION['Cust_id']; ?>">                 
+
+                <label for="city" class="col-3">Select Cart Book</label>
+                <select class="form-control logininput col-9 mb-2" id="BookName" name = "bookname">
+                    <option selected disabled>--Select Book--</option>
+                   <?php while($row = mysqli_fetch_assoc($runcartquery)): ?>
+                    <option value="<?php echo $row['Bookid']; ?>"><?php echo $row['Book_Name']; ?></option>
+                    <?php endwhile; ?>
+                </select>
+          
+                    <label for="" class="col-3" >Quantity:</label>
+                    <input type="number" name="qty" id="EmpFName" placeholder="Qty of Books" class="form-control logininput col-9 mb-2">
+
+                    <label for="photo" class="col-3">Order Date:</label>
+                    <input type="date" class="form-control logininput col-9 mb-2" id="orderdate" name="orderdate">
+
+                    <label for="" class="col-3">Payment_Method:</label>
+                        <select class="form-control logininput col-9 mb-2" name="payment" id="paymentmethod">
+                        <option value="">--Select Payment Method--</option>
+                        <?php while($row = mysqli_fetch_assoc($runpaymentquery)): ?>
+                        <option value="<?php echo $row['PaymentId']; ?>"><?php echo $row['PaymentMethod']; ?></option>
+                        <?php endwhile; ?>                        
                         </select>
-                    </div>
-                </div>
-                <?php
-                }?>
-            </div>
+
+                    <label for="city" class="col-3">Select BookType:</label>
+                    <select class="form-control logininput col-9 mb-2" id="Booktype" name = "booktype">
+                        <option selected disabled>--Select BookType--</option>
+                        <?php while($row = mysqli_fetch_assoc($queryrun)): ?>
+                        <option disabled value="<?php echo $row['Typeid']; ?>"></option>
+                        <?php endwhile; ?>
+                    </select>
+
+
+                    <label for="city" class="col-3">Select Delivery Locations:</label>
+                <select class="form-control logininput col-9 mb-2" require id="delivery" name ="dellocation">
+                    <option require selected disabled value="">--Select Delivery Locations--</option>           
+                </select>
+
+                <label for="city" class="col-3">Select Delivery Charges (In Rs.):</label>
+                <select class="form-control logininput col-9 mb-2" id="deliverychar" name ="deliverycharges">
+                    <option selected disabled value="">--Select Delivery Charges(In Rs.)--</option>
+                </select>
+
+                <label for="city" class="col-3">Select Book Weight(in KG):</label>
+                <select class="form-control logininput col-9 mb-2" id="BookWeight" name ="bookweight">
+                    <option selected disabled value="">--Select Book Weight--</option>
+                    <?php while($row = mysqli_fetch_assoc($runweight)): ?>
+                        <option disabled value="<?php echo $row['weightid']?>"></option> 
+                       <?php endwhile; ?>
+                </select>
+
+                <label for="city" class="col-3">Delivery Charges on BookWeight(In Rs.):</label>
+                <select class="form-control logininput col-9 mb-2" id="deliveryweight" name ="deliverychargesweight">
+                    <option selected disabled value="">--Delivery Charges on BookWeight(In Rs.)--</option>
+                    <?php while($row = mysqli_fetch_assoc($rundelcharges)): ?>
+                        <!-- <option value=""></option>  -->
+                       <?php endwhile; ?>
+                </select>
+
+                  <!-- Credit Card Modal Box start here -->
+                  <form action="" id="formsubmit"> 
+                      <div class="modal fade" id="creditcard" role="dialog">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Credit Card Details</h1>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <!-- alert result message -->
+                                      <div id="result-message" class="alert alert-success"></div> 
+                                      <div class="modal-body">
+                                          <div class="container">
+                                              <div class="row">
+                                                  <div class="col-md-6">                    
+                                                          <div class="form-group mt-2">
+                                                          <?php echo @$_SESSION['CustName']; ?>
+                                                              <label for="" class="mb-1">Card Number:</label>
+                                                              <input type="text" class="form-control" placeholder="789 456 123 698" id="cardnumber" name="cardnumber">
+                                                          </div>                
+                                                  </div>
+                                                  <div class="col-md-6">                    
+                                                          <div class="form-group mt-2">
+                                                              <label for="" class="mb-1">Date of Expiry:</label>
+                                                              <input type="date" class="form-control" id="dateofexpiry" name="dateofexpiry">
+                                                          </div>                
+                                                  </div>
+                                              </div>
+
+                                              <div class="row">
+                                                  <div class="col-md-6">                    
+                                                          <div class="form-group mt-2">
+                                                              <label for="" class="mb-1">Title of Account:</label>
+                                                              <input type="text" class="form-control" placeholder="Enter Your A/c Name" id="titleofac" name="titleofAc">
+                                                          </div>                
+                                                  </div>
+                                                  <div class="col-md-6">                    
+                                                      <div class="form-group mt-2">
+                                                          <label for="" class="mb-1">Customer Name:</label>  
+                                                          <input type="text" class="form-control" placeholder="Customer Name" disabled value="<?php echo @$_SESSION['CustName'];?>" name="<?php echo @$_SESSION['Cust_id'];?>">               
+                                                      </div>               
+                                                  </div>
+                                              </div>
+                                          </div>  
+                                      </div>
+                                      <div class="modal-footer">
+                                              <!--Footer-->
+                                              <div class="modal-footer float-right">
+                                                  <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                                                  <button type="button" id="btncredit" value="" name="" class="btn btn-dark">Submit Payment Method</button>
+                                              </div>
+                                      </div>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+                  <!-- Credit Card Modal Box End here -->
+
+                  <!-- Through Cash Modal Box Start here -->
+                  <form action="" id="submitcashform">
+                      <div class="modal fade" id="cashmodal" role="dialog">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Cash Details</h1>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <!-- alert result message -->
+                                  <div id="result-msg" class="alert alert-success"></div> 
+                                  <div class="modal-body">
+                                              <div class="container">
+                                                  <div class="row">
+                                                  <div class="col-md-6">                    
+                                                          <div class="form-group mt-2">
+                                                              <label for="" class="mb-1">Customer Name:</label> 
+                                                              <input type="text" class="form-control" placeholder="Customer Name" disabled value="<?php echo @$_SESSION['CustName'];?>" name="<?php echo @$_SESSION['Cust_id'];?>">               
+                                                              
+                                                          </div>               
+                                                      </div>
+
+                                                      <div class="col-md-6">                    
+                                                              <div class="form-group mt-2">
+                                                                  <label for="" class="mb-1">Contact No:</label>
+                                                                  <input type="text" class="form-control" placeholder="Enter Your Contact No" id="contactno" name="contactno">
+                                                              </div>                
+                                                      </div>
+                                                  
+                                                  </div>
+
+                                                  <div class="row">
+                                                      
+
+                                                      <div class="col-md-12">                    
+                                                              <div class="form-group mt-2">
+                                                                  <label for="" class="mb-1">Postal Address:</label>
+                                                                  <textarea id="postaladdress" name="PostalAddress" class="form-control" cols="30" rows="10"></textarea>
+                                                              </div>                
+                                                      </div>
+                                                      
+                                                  </div>
+                                              </div>                          
+                                  </div>
+                                      <div class="modal-footer">
+                                              <!--Footer-->
+                                              <div class="modal-footer float-right">
+                                              <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                                              <button type="button" id="submitcash" class="btn btn-dark">Save Cash Details</button>
+                                              </div>
+                                      </div>
+                                  
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+                  <!-- Through Cash Modal Box End here -->
+
+          <button type="submit" name="btn" class="btn btn-primary form-control mt-2" style="background-color:#5271ff;">Add</button>
         </div>
-    </div>
-    <div class="col-8 p-2" style=" margin-top: 10px;">
-        <div class="box">
-            <h1 style="text-align:center; font-size: 25px;">ORDER DETAILS</h1>
-            <div class="row p-4">
-                <h1 class="" style="font-size:20px;">Delivery Area</h1>
-                        <input type="hidden" value="<?= $data['Bookid'] ?>" name="bookid">
-                        <select id="Booktype" name="booktype" class="form-control logininput col-12 mt-3" style="height: 35px;">
-                            <option value="Select Book Type"></option>
-                            <?php
-                                $query = "select * from booktype";
-                                $queryrun = mysqli_query($con, $query);
-                                while($row = mysqli_fetch_assoc($queryrun)):?>
-                            <option value="<?= $row['Typeid']?>"><?= $row['Type']?></option>
-                            <?php endwhile; ?>
-                        </select>
-            </div>
-        </div>
-    </div>
+    </form>
 </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script>
+    // BookType
+    $('#BookName').on('change',function(){
+        var booknameid = this.value;
+        console.log(booknameid);
+        $.ajax({
+            url: 'Admin Panel/Bookname.php',
+            type: "POST",
+            data:{
+                bname_id: booknameid
+            },
+            success:function(result){
+                console.log(result);
+                $('#Booktype').html(result);
+            }
+        })
+    });
+
+    // BookWeight
+    $('#Booktype').on('change',function(){
+        var booktype_id = this.value;
+         console.log(booktype_id);
+        $.ajax({
+            url: 'Admin Panel/BookWeight.php',
+            type: "POST",
+            data:{
+                type_id: booktype_id
+            },
+            success:function(result){
+                console.log(result);
+                $('#BookWeight').html(result);
+            }
+        })
+    });
+
+
+    // DeliveryLocation
+    $('#Booktype').on('change',function(){
+        var booktype_id = this.value;
+         console.log(booktype_id);
+        $.ajax({
+            url: 'Admin Panel/dropdown.php',
+            type: "POST",
+            data:{
+                type_id: booktype_id
+            },
+            success:function(result){
+                console.log(result);
+                $('#delivery').html(result);
+            }
+        })
+    });
+
+    //Delivery Charges
+    $('#delivery').on('change',function(){
+        var DeliveryLoc_id = this.value;
+        $.ajax({
+            url: 'Admin Panel/delivery_charges.php',
+            type: "POST",
+            data:{
+                Location_id: DeliveryLoc_id
+            },
+            success:function(result){
+                   console.log(result);
+                 $('#deliverychar').html(result);
+            }
+        })
+    });
+
+    //Weight of the Book
+    $('#BookWeight').on('change', function(){
+        var weightid = this.value;
+        console.log(weightid);
+        $.ajax({
+            url: 'Admin Panel/ChargesonWeight.php',
+            type: "POST",
+            data:{
+                Weight_id : weightid
+            },
+            success:function(result){
+                console.log(result);
+                $('#deliveryweight').html(result);
+            }
+        })
+    });
+
+        //Credit  Card and Cash 
+        $('#paymentmethod').change(function(){
+            var paymethod = this.value;
+            console.log(paymethod);
+                if(paymethod == 1){
+                    $("#creditcard").modal('show');
+                    $('#result-message').hide();
+                            $('#btncredit').click(function(){
+                                $.ajax({
+                                    url: 'Admin Panel/CreditCard.php',
+                                    type: "POST",
+                                    data: $('#formsubmit').serialize(),
+                                    success: function(result){
+                                        $('#result-message').fadeIn();
+                                        $('#formsubmit').trigger("reset");
+                                        $('#result-message').html(result);
+                                        console.log(result);
+                                        setTimeout(function(){
+                                        $('#result-message').fadeOut("slow");   
+                                        }, 1000);
+                                        
+                                    }
+                                })
+                            });
+                        
+                }
+                else{
+                    $("#cashmodal").modal('show');
+                    $('#result-msg').hide();
+                        $('#submitcash').click(function(){
+                            $.ajax({
+                                    url: 'Admin Panel/Cash.php',
+                                    type: "POST",
+                                    data: $('#submitcashform').serialize(),
+                                    success: function(result){
+                                        $('#result-msg').fadeIn();
+                                        $('#submitcashform').trigger("reset");
+                                        $('#result-msg').html(result);
+                                        console.log(result);
+                                        setTimeout(function(){
+                                        $('#result-msg').fadeOut("slow");   
+                                        }, 1000);
+                                        
+                                    }
+                                })
+                        });
+                }
+                
+
+                // OR
+
+            // if($(this).val() == 1){
+            //     $("#creditcard").modal('toggle');
+            // }
+            // else{
+            //     $("#cashmodal").modal('toggle');
+            // }
+        });
+    
+</script>
+        </div>
+    </div>
