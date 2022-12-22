@@ -8,6 +8,32 @@ else {
 include 'Layout/sidebar.php';
 include 'Layout/header.php';
 include 'Operations/Connection.php';
+
+// $query = "select * from booktype";
+// $queryrun = mysqli_query($con, $query);
+
+// $bookquery = "select * from books";
+// $runbookquery = mysqli_query($con, $bookquery);
+
+// $creditquery = "select * from credit_card";
+// $runcreditquery = mysqli_query($con, $creditquery);
+
+// $cashquery = "select * from cash_on_delivery";
+// $runcashquery = mysqli_query($con, $cashquery);
+
+// $custquery = "select * from customer";
+// $runcustquery =mysqli_query($con, $custquery);
+// $row = mysqli_fetch_assoc($runcustquery);
+
+
+// $weightquery = "select * from book_weight";
+// $runweight = mysqli_query($con, $weightquery);
+
+// $paymentquery = "select * from payment_method";
+// $runpaymentquery = mysqli_query($con, $paymentquery);
+
+// $delcharges = "select * from charge_on_weight";
+// $rundelcharges = mysqli_query($con, $delcharges);
 ?>
 <?php
 $ID = $_GET['Updid'];
@@ -25,6 +51,14 @@ $query = "select * from order_table
             ";
 $GetData = mysqli_query($con, $query);
 $Data = mysqli_fetch_assoc($GetData); 
+
+
+// $ordertable = "select * from order_table INNER JOIN books on order_table.bookid = books.Bookid 
+// INNER JOIN payment_method on order_table.Payment_Method = payment_method.PaymentId 
+// INNER JOIN booktype on order_table.BookType = booktype.Typeid 
+// INNER JOIN delivery_charges on order_table.Delivery_Charges = delivery_charges.chargeid 
+// INNER JOIN charge_on_weight on order_table.Charge_on_Weight = charge_on_weight.kgid where order_table.orderid = $ID";
+// $runordertable = mysqli_query($con, $ordertable);
 ?>
 <div class="pageMaterial" id="pageMaterial">
     <div class="Box">
@@ -89,68 +123,116 @@ $Data = mysqli_fetch_assoc($GetData);
     <svg xmlns="http://www.w3.org/2000/svg" onclick="window.location.href = 'Orders.php';" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
     </svg>
-    <form action="Operations/Account_Crud.php" method = "post">
+    <form action="Operations/Orders_Crud.php" method = "post">
         <div class="Addaccount form-group row">
             <h1 class="col-12" style="padding-bottom: 5px; COLOR:#5271ff;">
                 EDIT <span style="color:rgba(31, 31, 31, 0.719);">ORDER<span>
             </h1>
             <label class="col-3">Order No.</label>
-            <input type="text" readonly style="background-color:darkgrey !important; color: white; text-align:center; padding-left: 0px;" value = "<?= $Data['orderid']?>" name="customerid" class="form-control logininput col-2 mb-2">
+            <input type="text" readonly style="background-color:darkgrey !important; color: white; text-align:center; padding-left: 0px;" value = "<?= $Data['orderid']?>" name="orderid" class="form-control logininput col-2 mb-2">
             
             <label class="col-3"  style="text-align: center;">Order Date</label>
             <input type="date" value = "<?= $Data['order_date']?>" name="orderdate" class="form-control logininput col-4 mb-2">
 
             <label class="col-3" >Customer</label>
-            <input type="text" readonly style="background-color:darkgrey !important; color: white;" value = "<?= $Data['Name']?>" name="name" class="form-control logininput col-9 mb-2">
+            <input type="hidden" readonly style="background-color:darkgrey !important; color: white;" value = "<?= $Data['custid']?>" name="custid" class="form-control logininput col-9 mb-2">
+            
+            <select class="form-control logininput col-9 mb-2" id="" name = "CustName" value="<?php echo $Data['Name']; ?>">
+                
+                        <!-- <option value="<?php echo $Data['custid']; ?>"></option> -->
+                       <?php 
+                       $query = "select  * from customer";
+                       $runcustquery = mysqli_query($con, $query);
+                       while($row = mysqli_fetch_assoc($runcustquery)): ?>
+                        <option value="<?php echo $row['custid']; ?>"><?php echo $row['Name']; ?></option>
+                        <?php endwhile; ?>
+            </select>
 
             <label class="col-3">Book</label>
             <select name="bookname" id="BookName" class="form-control logininput col-9 mb-2">
-                <option value = "<?= $Data['Bookid']?>" name="book"><?= $Data['Book_Name']?></option>
-            <?php
+                <option value = "<?= $Data['Bookid']?>"><?= $Data['Book_Name']?></option>
+                <?php
               $Books = "select * from books";
+              
               $query = mysqli_query($con, $Books);
-                while($row = mysqli_fetch_assoc($query)){
-                    $output .= '<option value="' .$row['bookid'] . '">'. $row['Book_Name'] . '</option>';
-                }
-                echo $output;
-
-            ?>
+              while($row = mysqli_fetch_assoc($query)): ?>
+                <option value = "<?= $row['Bookid']?>"><?= $row['Book_Name']?></option>
+                
+                <!-- $output .= '<option value="' .$row['bookid'] . '">'. $row['Book_Name'] . '</option>'; -->
+                <?php endwhile; ?>
             </select>
+
             <label class="col-3">Quantity</label>
             <input type="number" value = "<?= $Data['qty']?>" name="quantity" class="form-control logininput col-9 mb-2">
 
+            <label for="" class="col-3">Payment_Method:</label>
+            <select class="form-control logininput col-9 mb-2" name="payment" id="paymentmethod">
+              <option value = "<?= $Data['PaymentId']?>" name="payment"><?= $Data['PaymentMethod']?></option>
+                 <?php 
+                    $query = "select * from payment_method";
+                    $runpaymentquery = mysqli_query($con, $query);
+                    while($row = mysqli_fetch_assoc($runpaymentquery)): ?>
+                    <option value="<?php echo $row['PaymentId']; ?>"><?php echo $row['PaymentMethod']; ?></option>
+                  <?php endwhile; ?>                        
+            </select>
+            
             <label class="col-3">Book Type</label>
-            <select name="bookname" id="Booktype" name = "booktype" class="form-control logininput col-9 mb-2">
+            <select id="Booktype" name = "booktype" class="form-control logininput col-9 mb-2">
                 <option value = "<?= $Data['Typeid']?>"><?= $Data['Type']?></option>
                 <?php 
                 $query = "select * from booktype";
                 $queryrun = mysqli_query($con, $query);
-                while($row = mysqli_fetch_assoc($queryrun)){
-                ?>
-                    <option disabled value="<?php echo $row['Typeid']; ?>"></option>
-                <?php 
-                }
-                ?>
+                while($row = mysqli_fetch_assoc($queryrun)):?>
+                <option value = "<?= $row['Typeid']?>"></option>
+                  <!-- $output .= '<option value="' .$row['Typeid'] . '">'. $row['Type'] . '</option>'; -->
+                  <?php endwhile; ?>
+                
             </select>
-            <label class="col-3">Delivery Type</label>
-            <input type="text" value = "<?= $Data['Location']?>" name="deliverytype" class="form-control logininput col-9 mb-2">
             
-            <label class="col-3">Delivery Charges</label>
-            <input type="text" value = "<?= $Data['Charge_Amount']?>" name="deliverycharges" class="form-control logininput col-9 mb-2">
+            <label class="col-3">Delivery Location</label>
+            <select class="form-control logininput col-9 mb-2" require id="delivery" name ="dellocation">
+            <option value = "<?= $Data['Locationid']?>"><?= $Data['Location']?></option>            
+            <!-- <option require selected disabled value=""></option>            -->
+          </select>
+          
+          
+          
+          <label class="col-3">Delivery Charges</label>
+                <select class="form-control logininput col-9 mb-2" id="deliverychar" name ="deliverycharges">
+              <option value = "<?= $Data['chargeid']?>"><?= $Data['Charge_Amount']?></option>            
+                        
             
-            <label class="col-3">Book Weight</label>
-            <input type="text" value = "<?= $Data['weight']?>" name="bookweight" class="form-control logininput col-9 mb-2">
-            
-            <label class="col-3">Charge On Kg</label>
-            <input type="text" value = "<?= $Data['charge']?>" name="bookweight" class="form-control logininput col-9 mb-2">
+            </select>
 
-          <button type="submit" name="Updateorder" class="btn btn-primary form-control mt-2" style="background-color:#5271ff;">Update</button>
+
+            <label class="col-3">Book Weight</label>
+            <select class="form-control logininput col-9 mb-2" id="BookWeight" name ="bookweight">
+            <option value = "<?= $Data['weightid']?>"><?= $Data['weight']?></option>  
+                        <!-- <option selected disabled value="">--Select Book Weight--</option> -->
+                        <?php 
+                        $query = "select * from book_weight";
+                        $runweight = mysqli_query($con, $query);
+                        while($row = mysqli_fetch_assoc($runweight)): ?>
+                            <option disabled value="<?php echo $row['weightid']?>"></option> 
+                        <?php endwhile; ?>
+            </select>
+
+
+            <label class="col-3">Charge On BookWeight in Kg</label>
+            <!-- <input type="text" value = "<?= $Data['kgid']?>" name="bookweight" class="form-control logininput col-9 mb-2"> -->
+            <select class="form-control logininput col-9 mb-2" id="deliveryweight" name ="deliverychargesweight">
+              <option value = "<?= $Data['kgid']?>"><?= $Data['charge']?></option>            
+            </select>
+
+          <input type="submit" name="Updateorder" class="btn btn-primary form-control mt-2" style="background-color:#5271ff;" value="Update">
         </div>
     </form>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script>
+        // BookType
         $('#BookName').on('change',function(){
             var booknameid = this.value;
             console.log(booknameid);
@@ -166,4 +248,132 @@ $Data = mysqli_fetch_assoc($GetData);
                 }
             })
         });
-</script>
+
+        // BookWeight
+        $('#Booktype').on('change',function(){
+            var booktype_id = this.value;
+             console.log(booktype_id);
+            $.ajax({
+                url: 'BookWeight.php',
+                type: "POST",
+                data:{
+                    type_id: booktype_id
+                },
+                success:function(result){
+                    console.log(result);
+                    $('#BookWeight').html(result);
+                }
+            })
+        });
+
+
+        // DeliveryLocation
+        $('#Booktype').on('change',function(){
+            var booktype_id = this.value;
+             console.log(booktype_id);
+            $.ajax({
+                url: 'dropdown.php',
+                type: "POST",
+                data:{
+                    type_id: booktype_id
+                },
+                success:function(result){
+                    console.log(result);
+                    $('#delivery').html(result);
+                }
+            })
+        });
+
+        //Delivery Charges
+        $('#delivery').on('change',function(){
+            var DeliveryLoc_id = this.value;
+            $.ajax({
+                url: 'delivery_charges.php',
+                type: "POST",
+                data:{
+                    Location_id: DeliveryLoc_id
+                },
+                success:function(result){
+                       console.log(result);
+                     $('#deliverychar').html(result);
+                }
+            })
+        });
+
+        //Weight of the Book
+        $('#BookWeight').click('change', function(){
+            var weightid = this.value;
+            console.log(weightid);
+            $.ajax({
+                url: 'ChargesonWeight.php',
+                type: "POST",
+                data:{
+                    Weight_id : weightid
+                },
+                success:function(result){
+                    console.log(result);
+                    $('#deliveryweight').html(result);
+                }
+            })
+        });
+
+            //Credit  Card and Cash 
+            $('#paymentmethod').change(function(){
+                var paymethod = this.value;
+                console.log(paymethod);
+                    if(paymethod == 1){
+                        $("#creditcard").modal('show');
+                        $('#result-message').hide();
+                                $('#btncredit').click(function(){
+                                    $.ajax({
+                                        url: 'CreditCard.php',
+                                        type: "POST",
+                                        data: $('#formsubmit').serialize(),
+                                        success: function(result){
+                                            $('#result-message').fadeIn();
+                                            $('#formsubmit').trigger("reset");
+                                            $('#result-message').html(result);
+                                            console.log(result);
+                                            setTimeout(function(){
+                                            $('#result-message').fadeOut("slow");   
+                                            }, 1000);
+                                            
+                                        }
+                                    })
+                                });
+                            
+                    }
+                    else{
+                        $("#cashmodal").modal('show');
+                        $('#result-msg').hide();
+                            $('#submitcash').click(function(){
+                                $.ajax({
+                                        url: 'Cash.php',
+                                        type: "POST",
+                                        data: $('#submitcashform').serialize(),
+                                        success: function(result){
+                                            $('#result-msg').fadeIn();
+                                            $('#submitcashform').trigger("reset");
+                                            $('#result-msg').html(result);
+                                            console.log(result);
+                                            setTimeout(function(){
+                                            $('#result-msg').fadeOut("slow");   
+                                            }, 1000);
+                                            
+                                        }
+                                    })
+                            });
+                    }
+                    
+
+                    // OR
+
+                // if($(this).val() == 1){
+                //     $("#creditcard").modal('toggle');
+                // }
+                // else{
+                //     $("#cashmodal").modal('toggle');
+                // }
+            });
+        
+    </script>

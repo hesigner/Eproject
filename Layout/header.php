@@ -31,17 +31,15 @@
         if (isset($_SESSION['DatabaseName'])) {
           echo '<div class="accountBar">
               <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" onclick="showmodal()">
-            </div>
+            </div>    
             <form action="Operations/Accounts.php" method="post">
             <div class="profilemodal" id="profilemodal" style="display:none;">
             <ul>
               <li><a href="">Profile</a></li>
-              <li><a href="">Membership</a></li>
-              <li><a href="">Settings</a></li>
               <li><button name="Logout">Logout</button></li>
             </ul>
           </div>
-          </form>
+          </form>                                                        
             ';
         } 
         else {

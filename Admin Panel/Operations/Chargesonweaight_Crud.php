@@ -11,8 +11,7 @@
             if($Check){
                 echo "
                 <script>
-                alert('Data has been Inserted');
-                window.location.href = '../Chargeonweight.php';
+                window.location.href = '../Chargeonweight.php?added=1';
                 </script>";
             }
             else{
@@ -34,8 +33,7 @@
     if ($res) {
     echo "
     <script>
-    alert('Data Deleted!!');
-    window.location.href = '../Chargeonweight.php';
+    window.location.href = '../Chargeonweight.php?deleted=1';
     </script>";
     }
     mysqli_close($con);

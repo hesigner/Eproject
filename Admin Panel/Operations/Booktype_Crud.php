@@ -11,8 +11,7 @@ if (isset($_POST['addbooktype'])) {
     if ($Check) {
         echo "
                 <script>
-                alert('Data has been Inserted');
-                window.location.href = '../Booktype.php';
+                window.location.href = '../Booktype.php?added=1';
                 </script>";
     } else {
         echo "
@@ -33,8 +32,7 @@ if (isset($_POST['addbooktype'])) {
     if ($res) {
     echo "
     <script>
-    alert('Data Deleted!!');
-    window.location.href = '../Booktype.php';
+    window.location.href = '../Booktype.php?deleted=1';
     </script>";
     }
     mysqli_close($con);

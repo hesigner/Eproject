@@ -14,8 +14,7 @@
         if($Catrgories){
             echo "
             <script>
-            alert('Method Already Exist');
-            window.location.href = '../PaymentMethod.php';
+            window.location.href = '../PaymentMethod.php?exist=1';
             </script>";
         }
         else{
@@ -24,8 +23,7 @@
             if($Check){
                 echo "
                 <script>
-                alert('Data has been Inserted');
-                window.location.href = '../PaymentMethod.php';
+                window.location.href = '../PaymentMethod.php?added=1';
                 </script>";
             }
             else{
@@ -48,8 +46,8 @@
         $res = mysqli_query($con, $query) or die("Query Failed");
         if ($res) {
             echo "
-            <script> alert('Data Updated');
-            window.location.href='../PaymentMethod.php';
+            <script>
+            window.location.href='../PaymentMethod.php?updated=1';
             </script>";
         }
          else {
@@ -67,8 +65,7 @@
     if ($res) {
     echo "
     <script>
-    alert('Data Deleted!!');
-    window.location.href = '../PaymentMethod.php';
+    window.location.href = '../PaymentMethod.php?deleted=1';
     </script>";
     }
     mysqli_close($con);

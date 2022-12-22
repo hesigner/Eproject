@@ -108,7 +108,7 @@ include 'Operations/Connection.php';
 include 'Layout/cart.php';
 ?>
 
-<div class="alert alert-success" role="alert" id="mesgreceived" style="position:fixed; bottom:0px; margin-left: 20px; display: none;">
+<div class="alert alert-success" role="alert" id="mesgreceived" style="position:fixed; bottom:0px; right: 20px; display: none; box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.126);">
   Book has been added to cart !
 </div>
 <?php
@@ -122,7 +122,6 @@ include 'Layout/cart.php';
 
   function myGreeting() {
     document.getElementById('mesgreceived').style.display = 'none';
-    window.location.href='Books.php';
 
   }
     </script>";

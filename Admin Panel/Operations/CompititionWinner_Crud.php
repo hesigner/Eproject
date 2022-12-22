@@ -8,7 +8,7 @@
         $Price =  $_POST['winnerprice'];
 
 
-        $CheckCategory = "select * from winners where compid = '$Compitition'";
+        $CheckCategory = "select * from winners where custid = '$Winner'";
 
         $query = mysqli_query($con, $CheckCategory);
         $Catrgories = mysqli_num_rows($query);
@@ -16,8 +16,7 @@
         if($Catrgories){
             echo "
             <script>
-            alert('Competition Winner Already Exist');
-            window.location.href = '../CompititionWinner.php';
+            window.location.href = '../CompititionWinner.php?exist=1';
             </script>";
         }
         else{
@@ -26,8 +25,7 @@
             if($Check){
                 echo "
                 <script>
-                alert('Data has been Inserted');
-                window.location.href = '../CompititionWinner.php';
+                window.location.href = '../CompititionWinner.php?added=1';
                 </script>";
             }
             else{
@@ -46,13 +44,13 @@
         $Compitition =  $_POST['winnercompititon'];
         $Winner =  $_POST['winnerCustomer'];
         $Price =  $_POST['winnerprice'];
-        $query = "update winners set compid='$Compitition', prizes='$Price', custid='$Winner where winid = '$Id'";
-       
+
+        $query = "update winners set compid='$Compitition', prizes='$Price', custid='$Winner' where winid = '$Id'";
         $res = mysqli_query($con, $query) or die("Query Failed");
         if ($res) {
             echo "
-            <script> alert('Data Updated');
-            window.location.href='../CompititionWinner.php';
+            <script> 
+            window.location.href='../CompititionWinner.php?updated=1';
             </script>";
         }
          else {
@@ -70,8 +68,7 @@
     if ($res) {
     echo "
     <script>
-    alert('Data Deleted!!');
-    window.location.href = '../CompititionWinner.php';
+    window.location.href = '../CompititionWinner.php?deleted=1';
     </script>";
     }
     mysqli_close($con);

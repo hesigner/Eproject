@@ -34,7 +34,7 @@ body{
 .accountBarText{
     margin-top: 5px;
     padding-left: 10px;
-    width: 140px;
+    width: fit-content;
     float: right;
 }
 .accountBarText>h1{
@@ -56,7 +56,45 @@ body{
     width: 35px;
     color: white;
 }
-
+.profilemodal{
+    background-color: rgba(54, 54, 54, 0.911);
+    z-index: 999;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.363);
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: absolute;
+    margin-left: 30px;
+    margin-top: 4px;
+}
+.profilemodal>ul{
+    padding: 0px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.profilemodal>ul>li{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    list-style: none;
+}
+.profilemodal>ul>li>button{
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(204, 204, 204);
+    border: none;
+    padding: 0px;
+}
+.profilemodal>ul>li>button:hover{
+    color: #4d66d3;
+    cursor: pointer;
+}
+.profilemodal>ul>li>a:hover{
+    color: #4d66d3;
+    cursor: pointer;
+}
+.profilemodal>ul>li>a{
+    color: rgb(204, 204, 204);
+    text-decoration: none;
+}
 /* Sidebar */
 .Logo{
     width: 100%;

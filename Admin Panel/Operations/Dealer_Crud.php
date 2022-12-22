@@ -17,8 +17,7 @@
         if($Catrgories){
             echo "
             <script>
-            alert('Email Already Exist');
-            window.location.href = '../Dealers.php';
+            window.location.href = '../Dealers.php?exist=1';
             </script>";
         }
         else{
@@ -27,8 +26,7 @@
             if($Check){
                 echo "
                 <script>
-                alert('Data has been Inserted');
-                window.location.href = '../Dealers.php';
+                window.location.href = '../Dealers.php?added=1';
                 </script>";
             }
             else{
@@ -54,9 +52,8 @@
        
         $res = mysqli_query($con, $query) or die("Query Failed");
         if ($res) {
-            echo "
-            <script> alert('Data Updated');
-            window.location.href='../Dealers.php';
+            echo "<script>
+            window.location.href='../Dealers.php?updated=1';
             </script>";
         }
          else {
@@ -74,8 +71,7 @@
     if ($res) {
     echo "
     <script>
-    alert('Data Deleted!!');
-    window.location.href = '../Dealers.php';
+    window.location.href = '../Dealers.php?deleted=1';
     </script>";
     }
     mysqli_close($con);

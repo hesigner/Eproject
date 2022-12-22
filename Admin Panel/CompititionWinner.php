@@ -111,3 +111,79 @@ include 'Operations/Connection.php';
         </form>
     </div>
 
+    <div class="alert alert-warning" role="alert" id="exist" style="position:fixed; bottom:0px; right: 20px; display: none; box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.126);">
+    Competition Winner already <b>Exists</b> !
+</div>
+    <div class="alert alert-success" role="alert" id="updated" style="position:fixed; bottom:0px; right: 20px; display: none; box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.126);">
+    Competition Winner has been <b>Updated</b> Sucessfully!
+</div>
+
+<div class="alert alert-success" role="alert" id="deleted" style="position:fixed; bottom:0px; right: 20px; display: none; box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.126);">
+Competition Winner has been <b>Deleted</b> Sucessfully!
+</div>
+
+<div class="alert alert-success" role="alert" id="added" style="position:fixed; bottom:0px; right: 20px; display: none; box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.126);">
+Competition Winner has been <b>Added</b> Sucessfully!
+</div>
+<?php
+@
+  $ID = $_GET['added'];
+  if ($ID) {
+    echo "<script>
+  document.getElementById('added').style.display = 'block';
+
+  const myTimeout = setTimeout(myGreeting, 5000);
+
+  function myGreeting() {
+    document.getElementById('added').style.display = 'none';
+    window.location.href='CompititionWinner.php';
+
+  }
+    </script>";
+    }
+    @
+    $ID = $_GET['deleted'];
+    if ($ID) {
+      echo "<script>
+    document.getElementById('deleted').style.display = 'block';
+  
+    const myTimeout = setTimeout(myGreeting, 5000);
+  
+    function myGreeting() {
+      document.getElementById('deleted').style.display = 'none';
+      window.location.href='CompititionWinner.php';
+  
+    }
+      </script>";
+      }
+      @
+      $ID = $_GET['updated'];
+      if ($ID) {
+        echo "<script>
+      document.getElementById('updated').style.display = 'block';
+    
+      const myTimeout = setTimeout(myGreeting, 5000);
+    
+      function myGreeting() {
+        document.getElementById('updated').style.display = 'none';
+        window.location.href='CompititionWinner.php';
+    
+      }
+        </script>";
+        }
+        @
+        $ID = $_GET['exist'];
+        if ($ID) {
+          echo "<script>
+        document.getElementById('exist').style.display = 'block';
+      
+        const myTimeout = setTimeout(myGreeting, 5000);
+      
+        function myGreeting() {
+          document.getElementById('exist').style.display = 'none';
+          window.location.href='CompititionWinner.php';
+      
+        }
+          </script>";
+          }
+?>

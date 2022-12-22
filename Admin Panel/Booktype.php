@@ -83,3 +83,65 @@ include 'Operations/Connection.php';
             </div>
         </form>
     </div>
+
+    <div class="alert alert-warning" role="alert" id="exist" style="position:fixed; bottom:0px; right: 20px; display: none; box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.126);">
+    Book Type already <b>Exists</b> !
+</div>
+
+
+<div class="alert alert-success" role="alert" id="deleted" style="position:fixed; bottom:0px; right: 20px; display: none; box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.126);">
+Book Type has been <b>Deleted</b> Sucessfully!
+</div>
+
+<div class="alert alert-success" role="alert" id="added" style="position:fixed; bottom:0px; right: 20px; display: none; box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.126);">
+Book Type has been <b>Added</b> Sucessfully!
+</div>
+<?php
+@
+  $ID = $_GET['added'];
+  if ($ID) {
+    echo "<script>
+  document.getElementById('added').style.display = 'block';
+
+  const myTimeout = setTimeout(myGreeting, 5000);
+
+  function myGreeting() {
+    document.getElementById('added').style.display = 'none';
+    window.location.href='Booktype.php';
+
+  }
+    </script>";
+    }
+    @
+    $ID = $_GET['deleted'];
+    if ($ID) {
+      echo "<script>
+    document.getElementById('deleted').style.display = 'block';
+  
+    const myTimeout = setTimeout(myGreeting, 5000);
+  
+    function myGreeting() {
+      document.getElementById('deleted').style.display = 'none';
+      window.location.href='Booktype.php';
+  
+    }
+      </script>";
+      }
+     
+        @
+        $ID = $_GET['exist'];
+        if ($ID) {
+          echo "<script>
+        document.getElementById('exist').style.display = 'block';
+      
+        const myTimeout = setTimeout(myGreeting, 5000);
+      
+        function myGreeting() {
+          document.getElementById('exist').style.display = 'none';
+          window.location.href='Booktype.php';
+      
+        }
+          </script>";
+          }
+?>
+

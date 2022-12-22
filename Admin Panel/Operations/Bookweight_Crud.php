@@ -14,8 +14,7 @@ if (isset($_POST['addweight'])) {
     if ($Check) {
         echo "
                 <script>
-                alert('Data has been Inserted');
-                window.location.href = '../Booksweightmain.php';
+                window.location.href = '../Booksweightmain.php?added=1';
                 </script>";
     } else {
         echo "
@@ -36,8 +35,7 @@ if (isset($_POST['addweight'])) {
     if ($res) {
     echo "
     <script>
-    alert('Data Deleted!!');
-    window.location.href = '../Booksweightmain.php';
+    window.location.href = '../Booksweightmain.php?deleted=1';
     </script>";
     }
     mysqli_close($con);

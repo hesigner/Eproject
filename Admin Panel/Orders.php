@@ -107,7 +107,18 @@ $rundelcharges = mysqli_query($con, $delcharges);
             </h1>        
 
                     <label for="" class="col-3">Customer Name:</label>
-                    <input type="text" disabled placeholder="Customer Name" class="form-control logininput col-9 mb-2"  value="<?php echo @$_SESSION['CustName']; ?>" name="<?php echo @$_SESSION['Cust_id'];?>"> 
+                     
+                    <select class="form-control logininput col-9 mb-2" id="" name = "CustName">
+                        <option selected disabled>--Select Customer Name--</option>
+                       <?php 
+                       $query = "select  * from customer";
+                       $runcustquery = mysqli_query($con, $query);
+                       while($row = mysqli_fetch_assoc($runcustquery)): ?>
+                        <option value="<?php echo $row['custid']; ?>"><?php echo $row['Name']; ?></option>
+                        <?php endwhile; ?>
+                    </select>
+
+
 
                     <label for="city" class="col-3">Select Book Name:</label>
                     <select class="form-control logininput col-9 mb-2" id="BookName" name = "bookname">
@@ -359,7 +370,7 @@ $rundelcharges = mysqli_query($con, $delcharges);
         });
 
         //Weight of the Book
-        $('#BookWeight').click('change', function(){
+        $('#BookWeight').on('change', function(){
             var weightid = this.value;
             console.log(weightid);
             $.ajax({

@@ -13,8 +13,7 @@
         if($Catrgories){
             echo "  
             <script>
-            alert('Category Already Exist');
-            window.location.href = '../Category.php';
+            window.location.href = '../Category.php?exist=1';
             </script>";
         }
         else{
@@ -23,8 +22,7 @@
             if($Check){
                 echo "
                 <script>
-                alert('Data has been Inserted');
-                window.location.href = '../Category.php';
+                window.location.href = '../Category.php?added=1';
                 </script>";
             }
             else{
@@ -46,9 +44,8 @@
     
         $res = mysqli_query($con, $query) or die("Query Failed");
         if ($res) {
-            echo "
-            <script> alert('Data Inserted');
-            window.location.href='../Category.php';
+            echo "<script>
+            window.location.href='../Category.php?updated=1';
             </script>";
         }
          else {
@@ -66,8 +63,7 @@
     if ($res) {
     echo "
     <script>
-    alert('Data Deleted!!');
-    window.location.href = '../Category.php';
+    window.location.href = '../Category.php?deleted=1';
     </script>";
     }
     mysqli_close($con);

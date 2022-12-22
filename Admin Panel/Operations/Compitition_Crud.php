@@ -17,8 +17,7 @@
         if($Catrgories){
             echo "
             <script>
-            alert('Email Already Exist');
-            window.location.href = '../Compitition.php';
+            window.location.href = '../Compitition.php?exist=1';
             </script>";
         }
         else{
@@ -27,8 +26,7 @@
             if($Check){
                 echo "
                 <script>
-                alert('Data has been Inserted');
-                window.location.href = '../Compitition.php';
+                window.location.href = '../Compitition.php?added=1';
                 </script>";
             }
             else{
@@ -55,8 +53,8 @@
         $res = mysqli_query($con, $query) or die("Query Failed");
         if ($res) {
             echo "
-            <script> alert('Data Updated');
-            window.location.href='../Compitition.php';
+            <script>
+            window.location.href='../Compitition.php?updated=1';
             </script>";
         }
          else {
@@ -74,7 +72,6 @@
     if ($res) {
     echo "
     <script>
-    alert('Data Deleted!!');
     window.location.href = '../Compitition.php';
     </script>";
     }

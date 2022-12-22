@@ -21,8 +21,7 @@
         if($Catrgories){
             echo "
             <script>
-            alert('Email Already Exist');
-            window.location.href = '../Accounts.php';
+            window.location.href = '../Accounts.php?exist=1';
             </script>";
         }
         else{
@@ -31,15 +30,14 @@
             if($Check){
                 echo "
                 <script>
-                alert('Data has been Inserted');
-                window.location.href = '../Accounts.php';
+                window.location.href = '../Accounts.php?added=1';
                 </script>";
             }
             else{
                 echo "
                 <script>
                 alert('Data Insertion Failed !!!');
-                window.location.href = '../Accounts.php''
+                window.location.href = '../Accounts.php';
                 </script>";
             }
         }
@@ -62,8 +60,8 @@
         $res = mysqli_query($con, $query) or die("Query Failed");
         if ($res) {
             echo "
-            <script> alert('Data Updated');
-            window.location.href='../Accounts.php';
+            <script> 
+            window.location.href='../Accounts.php?updated=1';
             </script>";
         }
          else {
@@ -81,8 +79,7 @@
     if ($res) {
     echo "
     <script>
-    alert('Data Deleted!!');
-    window.location.href = '../Accounts.php';
+    window.location.href = '../Accounts.php?deleted=1';
     </script>";
     }
     mysqli_close($con);
